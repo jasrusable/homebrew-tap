@@ -1,24 +1,27 @@
 # Rendered by packaging/homebrew/render.sh for each release and pushed to the
 # jasrusable/homebrew-tap repository. Do not edit the rendered copy there.
 class OpenwrtConfigurator < Formula
-  desc "Provision OpenWrt devices from one JSON network config"
+  desc "Describe your network once; configure every OpenWrt router and access point"
   homepage "https://github.com/jasrusable/openwrt-configurator"
-  url "https://github.com/jasrusable/openwrt-configurator/releases/download/v0.1.0/openwrt-configurator.mjs"
-  version "0.1.0"
-  sha256 "b28398034c4b6f63b3552cda8bd8f62e973dae2922348b090eb7755259051953"
-  license "ISC"
+  url "https://github.com/jasrusable/openwrt-configurator/releases/download/v0.1.1/openwrt-configurator-node.tar.gz"
+  version "0.1.1"
+  sha256 "0f0a80052833a7ea254a2f30f2ca12dfa74b1626a2dcf9bb3b944d3f25f4cfc0"
+  license "AGPL-3.0-or-later"
 
-  depends_on "quickjs"
+  # The Node build, as QuickJS cannot listen on a port for the web UI.
+  depends_on "node"
 
   def install
-    libexec.install "openwrt-configurator.mjs"
+    # bin/openwrt-configurator.js finds the web UI beside it, at ../ui.
+    libexec.install "bin", "ui"
     (bin/"openwrt-configurator").write <<~SH
       #!/bin/sh
-      exec "#{Formula["quickjs"].opt_bin}/qjs" --module "#{libexec}/openwrt-configurator.mjs" "$@"
+      exec "#{Formula["node"].opt_bin}/node" "#{libexec}/bin/openwrt-configurator.js" "$@"
     SH
   end
 
   test do
     assert_equal version.to_s, shell_output("#{bin}/openwrt-configurator --version").strip
+    assert_match "intent-file", shell_output("#{bin}/openwrt-configurator ui --help")
   end
 end
