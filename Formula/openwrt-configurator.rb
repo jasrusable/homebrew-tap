@@ -3,9 +3,9 @@
 class OpenwrtConfigurator < Formula
   desc "Describe your network once; configure every OpenWrt router and access point"
   homepage "https://github.com/jasrusable/openwrt-configurator"
-  url "https://github.com/jasrusable/openwrt-configurator/releases/download/v0.1.3/openwrt-configurator-node.tar.gz"
-  version "0.1.3"
-  sha256 "afd16e5c9a450149f1c6d26c4a04437bd9d9252d13380031bb724c1ab2173284"
+  url "https://github.com/jasrusable/openwrt-configurator/releases/download/v0.1.4/openwrt-configurator-node.tar.gz"
+  version "0.1.4"
+  sha256 "e8403844f16231f3fc240aa706860fccb6c5a1b53152e618c971040801fbf121"
   license "AGPL-3.0-or-later"
 
   # The Node build, as QuickJS cannot listen on a port for the web UI.
